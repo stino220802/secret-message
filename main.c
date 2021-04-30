@@ -2,8 +2,9 @@
 #include <stdlib.h>
 
 #define __DEBUG
-
 #define BMPINPUTFILE "test.bmp"
+
+void KleurBits();
 
 int main()
 {
@@ -44,17 +45,12 @@ int main()
     fclose(inputFilePointer);
     for(int i =0; i < imageSize-2; i+=3)
     {
-        printf("pixel %d: B= %d, G=%d, R=%d\n", i, inputPixels[i], inputPixels[i+1], inputPixels[i+2]);
+        printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
     }
 
     fclose(inputFilePointer);
     free(inputPixels);
 
     return 0;
-}
 
-
-
-void KleurBits(){
-	FILE* fopen(BESTAND,"rb");
 }
