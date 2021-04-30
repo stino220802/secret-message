@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-<<<<<<< HEAD
+
 //#define __DEBUG
-=======
+
 #define __DEBUG
->>>>>>> main
+
 #define BMPINPUTFILE "test.bmp"
 
 void KleurBits();
@@ -48,29 +48,16 @@ int main()
 	
     fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer); // Lees alle pixels (de rest van de file
     fclose(inputFilePointer);
-<<<<<<< HEAD
-	for(int i =0; i < imageSize-2; i+=3)
-	{
-		printf("pixel %d: B= %d, G=%d, R=%d\n", i, inputPixels[i], inputPixels[i+1], inputPixels[i+2]);
-	}
-   
-=======
+
     for(int i =0; i < imageSize-2; i+=3)
     {
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
     }
 
->>>>>>> main
+
     fclose(inputFilePointer);
     free(inputPixels);
     
     return 0;
-
-<<<<<<< HEAD
-
-void KleurBits(){
-	FILE* fopen(BESTAND,"rb");
 }
-=======
-}
->>>>>>> main
+
