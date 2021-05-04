@@ -73,8 +73,22 @@ int convertToBits(unsigned char* inputPixels, int imageSize){
             bBin = bBin + rem*temp;
             temp =temp *10;
         }
+        while (g != 0){
+            rem = g%2;
+            g = g/2;
+            gBin = gBin + rem*temp;
+            temp =temp *10;
+        }
+        while (r != 0){
+            rem = r%2;
+            r = r/2;
+            rBin = rBin + rem*temp;
+            temp =temp *10;
+        }
     }
-    printf("%ld", bBin);
+    printf("%ld\n", bBin);
+    printf("%ld\n", gBin);
+    printf("%ld\n", rBin);
     return 0;
 }
 
