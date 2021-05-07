@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
                                                     //tijdelijk uit voor toekomstige code.
     }*/
     char c = NULL;
-    printf("een letter");
+    printf("een letter\n");
     scanf("%c",&c);
     changelettertobit(c);
 #ifdef __DEBUG
@@ -97,10 +97,14 @@ int convertToBits(unsigned char* inputPixels, int imageSize){
 
 void changelettertobit(char c)
 {
-
-    for (int i = 7; i >= 0; --i)
+    int bitarray[8];
+    for (int i = 0; i <= 7; ++i)
     {
         putchar( (c & (1 << i)) ? '1' : '0' );
+        bitarray[i] = (c & (1 << i)) ? 1 : 0;
     }
     putchar('\n');
+    for(int j = 0; j <= 7; ++j){
+        printf("%d",bitarray[j]);
+    }
 }
