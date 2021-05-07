@@ -3,8 +3,9 @@
 
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
-int convertToBits(unsigned char* inputPixels, int imageSize);
 void changelettertobit(char c);
+void convertToBits(unsigned char* inputPixels, int imageSize, int buf [] );
+int main()
 int main(int argc, char* argv[])
 {
    /* for (int i = 0; i < argc; i++) {
@@ -53,47 +54,64 @@ int main(int argc, char* argv[])
     for(int i =0; i < imageSize-2; i+=3)
     {
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
+
     }
-    convertToBits(inputPixels, imageSize);
+    int binair[imageSize];
+    convertToBits(inputPixels, imageSize, binair);
+    for(int i =0; i < imageSize-2; i+=3)
+    {
+        printf("pixel %d | R %d G %d B %d\n " , i ,binair[i], binair[i+1], binair[i+2]);
+
+    }
 
     fclose(inputFilePointer);
     free(inputPixels);
 
     return 0;
 }
-int convertToBits(unsigned char* inputPixels, int imageSize){
-    int r = 0;
-    long rBin = 0;
-    int g = 0;
-    long gBin = 0;
-    int b = 0;
-    long bBin = 0;
-    int rem , temp = 1;
+void convertToBits(unsigned char* inputPixels, int imageSize, int buf[]){
+
     for(int i = 0; i < imageSize-2; i += 3){
+        long bBin = 0;
+        int b = 0;
+        int brem , btemp = 1;
+        int grem , gtemp = 1;
+        int rrem , rtemp = 1;
+        int r = 0;
+        long rBin = 0;
+        int g = 0;
+        long gBin = 0;
+
         r = inputPixels[i+2];
         g = inputPixels[i+1];
         b = inputPixels[i];
         while (b != 0){
-            rem = b%2;
+            brem = b%2;
             b = b/2;
-            bBin = bBin + rem*temp;
-            temp =temp *10;
+            bBin = bBin + brem*btemp;
+            btemp =btemp *10;
+
         }
+
         while (g != 0){
-            rem = g%2;
+            grem = g%2;
             g = g/2;
-            gBin = gBin + rem*temp;
-            temp =temp *10;
+            gBin = gBin + grem*gtemp;
+            gtemp =gtemp *10;
         }
+
         while (r != 0){
-            rem = r%2;
+            rrem = r%2;
             r = r/2;
-            rBin = rBin + rem*temp;
-            temp =temp *10;
+            rBin = rBin + rrem*rtemp;
+            rtemp =rtemp *10;
+
         }
+        buf[i] = rBin;
+        buf[i+1] = gBin;
+        buf[i+2] = bBin;
+        //printf("%d\n", binair[i]);
     }
-    return 0;
-}
 
 void changelettertobit(char c)
 {
