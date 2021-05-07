@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define __DEBUG
+//#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
 int convertToBits(unsigned char* inputPixels, int imageSize);
+void changelettertobit(char c);
 int main(int argc, char* argv[])
 {
    /* for (int i = 0; i < argc; i++) {
                                                     //tijdelijk uit voor toekomstige code.
     }*/
+    char c = NULL;
+    printf("een letter");
+    scanf("%c",&c);
+    changelettertobit(c);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -87,8 +92,15 @@ int convertToBits(unsigned char* inputPixels, int imageSize){
             temp =temp *10;
         }
     }
-    printf("%ld\n", bBin);
-    printf("%ld\n", gBin);
-    printf("%ld\n", rBin);
     return 0;
+}
+
+void changelettertobit(char c)
+{
+
+    for (int i = 7; i >= 0; --i)
+    {
+        putchar( (c & (1 << i)) ? '1' : '0' );
+    }
+    putchar('\n');
 }
