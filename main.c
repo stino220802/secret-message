@@ -4,7 +4,6 @@
 #define __DEBUG
 #define BMPINPUTFILE "test.bmp"
 int convertToBits(unsigned char* inputPixels, int imageSize);
-void commandos();
 int main()
 {
     commandos();
@@ -92,14 +91,10 @@ int convertToBits(unsigned char* inputPixels, int imageSize){
     return 0;
 }
 
-void commandos(){
-    char command = 'a';
-    printf("Compress(C) of Decompress(D)\n");
-    scanf("%c ",&command);
-    if(command == 'C'|| command == 'D'){
-        printf("is compressed\n");
-    }
-    else{
-       commandos();
-    }
+
 }
+
+/*struct pixelgroep{
+    int aantalp = 0;
+    int groep = 0;
+};*/
