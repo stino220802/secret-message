@@ -1,16 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-//#define __DEBUG
-
 #define __DEBUG
-
 #define BMPINPUTFILE "test.bmp"
 int convertToBits(unsigned char* inputPixels, int imageSize);
+void commandos();
 int main()
 {
-
+    commandos();
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -76,19 +73,33 @@ int convertToBits(unsigned char* inputPixels, int imageSize){
             bBin = bBin + rem*temp;
             temp =temp *10;
         }
-        while (r != 0){
-            rem = r%2;
-            r = r/2;
-            rBin = rBin + rem*temp;
-            temp =temp *10;
-        }
         while (g != 0){
             rem = g%2;
             g = g/2;
             gBin = gBin + rem*temp;
             temp =temp *10;
         }
+        while (r != 0){
+            rem = r%2;
+            r = r/2;
+            rBin = rBin + rem*temp;
+            temp =temp *10;
+        }
     }
-    printf("%ld, %ld, %ld", bBin, rBin, gBin);
+    printf("%ld\n", bBin);
+    printf("%ld\n", gBin);
+    printf("%ld\n", rBin);
     return 0;
+}
+
+void commandos(){
+    char command = 'a';
+    printf("Compress(C) of Decompress(D)\n");
+    scanf("%c ",&command);
+    if(command == 'C'|| command == 'D'){
+        printf("is compressed\n");
+    }
+    else{
+       commandos();
+    }
 }
