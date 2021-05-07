@@ -4,9 +4,11 @@
 #define __DEBUG
 #define BMPINPUTFILE "test.bmp"
 int convertToBits(unsigned char* inputPixels, int imageSize);
-int main()
+int main(int argc, char* argv[])
 {
-    commandos();
+   /* for (int i = 0; i < argc; i++) {
+                                                    //tijdelijk uit voor toekomstige code.
+    }*/
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -90,11 +92,3 @@ int convertToBits(unsigned char* inputPixels, int imageSize){
     printf("%ld\n", rBin);
     return 0;
 }
-
-
-}
-
-/*struct pixelgroep{
-    int aantalp = 0;
-    int groep = 0;
-};*/
