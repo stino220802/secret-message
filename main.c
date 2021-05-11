@@ -11,15 +11,29 @@ int main(int argc, char* argv[])
 {
     /* for (int i = 0; i < argc; i++) {
                                                      //tijdelijk uit voor toekomstige code.
-     }*/
-    //FILE *Tekst = fopen(TEKSTINPUT,"r")
+     }*/;
+    FILE *fptr;
 
-    char message[200];
+    const char filename[] = "tekst.txt";
+    char c = NULL;
 
-    printf("geef de secret message in \n");
-    scanf("%s", message);
-    char* lettersToBit = changeLetterToBit(message);
-    printf("%s\n test string \n ", lettersToBit);
+    // Open file
+    fptr = fopen(filename, "r");
+    if (fptr == NULL)
+    {
+        printf("Cannot open file \n");
+        exit(0);
+    }
+
+    // Read contents from file
+    c = fgetc(fptr);
+    while (c != EOF)
+    {
+        printf ("%c", c);
+        c = fgetc(fptr);
+    }
+    changeLetterToBit(c);
+    fclose(fptr);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif

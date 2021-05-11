@@ -13,6 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ClangdSettings">
+    <option name="clangTidyViaClangd" value="false" />
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="Git.Settings">
@@ -52,7 +53,7 @@
       <updated>1619783126735</updated>
       <workItem from="1619783129635" duration="16758000" />
       <workItem from="1620385970941" duration="7967000" />
-      <workItem from="1620718650703" duration="1428000" />
+      <workItem from="1620718650703" duration="4181000" />
     </task>
     <servers />
   </component>
