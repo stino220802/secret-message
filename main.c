@@ -1,20 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
-char* changeLetterToBit(char* message);
+void changelettertobit(char c);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 int main(int argc, char* argv[])
 {
    /* for (int i = 0; i < argc; i++) {
                                                     //tijdelijk uit voor toekomstige code.
     }*/
-    char message[200];
-    printf("geef de secret message in \n");
-    scanf("%s", message);
-    changeLetterToBit(message);
+    char c = NULL;
+    printf("een letter\n");
+    scanf("%c",&c);
+    changelettertobit(c);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -114,22 +113,16 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
     }
 }
 
-char* changeLetterToBit(char* message)
+void changelettertobit(char c)
 {
-    if(message == NULL) return 0;
-    size_t len = strlen(message);
-    char *binair = malloc(len*8 + 1);
-    binair[0] = '/0';
-    for(size_t i = 0; i < len; i++){
-        char ch = message[i];
-        for(int j = 7; j >= 0; --j){
-            if(ch & (1<<j)){
-                strcat(binair, "1");
-            }
-            else{
-                strcat(binair, "0");
-            }
-        }
+    int bitarray[8];
+    for (int i = 0; i <= 7; ++i)
+    {
+        putchar( (c & (1 << i)) ? '1' : '0' );
+        bitarray[i] = (c & (1 << i)) ? 1 : 0;
     }
-    return binair;
+    putchar('\n');
+    for(int j = 0; j <= 7; ++j){
+        printf("%d",bitarray[j]);
+    }
 }
