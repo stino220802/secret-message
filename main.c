@@ -4,6 +4,7 @@
 
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
+#define TEKSTINPUT "tekst.txt"
 char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 int main(int argc, char* argv[])
@@ -11,6 +12,8 @@ int main(int argc, char* argv[])
     /* for (int i = 0; i < argc; i++) {
                                                      //tijdelijk uit voor toekomstige code.
      }*/
+    //FILE *Tekst = fopen(TEKSTINPUT,"r")
+
     char message[200];
     printf("geef de secret message in \n");
     scanf("%s", message);
