@@ -9,9 +9,15 @@ char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 int main(int argc, char* argv[])
 {
+    char message[200];
+    printf("geef secret message in ");
+    scanf("%s", message);
+    char *lettersToBits = changeLetterToBit(message);
+    printf("%s \n test\n", lettersToBits);
     /* for (int i = 0; i < argc; i++) {
                                                      //tijdelijk uit voor toekomstige code.
-     }*/;
+     }*/
+
     FILE *fptr;
 
     const char filename[] = "tekst.txt";
