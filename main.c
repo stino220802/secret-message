@@ -15,9 +15,11 @@ int main(int argc, char* argv[])
     //FILE *Tekst = fopen(TEKSTINPUT,"r")
 
     char message[200];
+
     printf("geef de secret message in \n");
     scanf("%s", message);
-    changeLetterToBit(message);
+    char* lettersToBit = changeLetterToBit(message);
+    printf("%s\n test string \n ", lettersToBit);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -122,7 +124,7 @@ char* changeLetterToBit(char* message)
     if(message == NULL) return 0;
     size_t len = strlen(message);
     char *binair = malloc(len*8 + 1);
-    binair[0] = '/0';
+    binair[0] = 0;
     for(size_t i = 0; i < len; i++){
         char ch = message[i];
         for(int j = 7; j >= 0; --j){
