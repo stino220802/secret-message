@@ -4,7 +4,7 @@
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
 void changelettertobit(char c);
-void convertToBits(unsigned char* inputPixels, int imageSize, int buf [] );
+void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 int main(int argc, char* argv[])
 {
    /* for (int i = 0; i < argc; i++) {
@@ -55,11 +55,11 @@ int main(int argc, char* argv[])
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
 
     }
-    int binair[imageSize];
-    convertToBits(inputPixels, imageSize, binair);
+    int pixelsBinair[imageSize];
+    convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
     for(int i =0; i < imageSize-2; i+=3)
     {
-        printf("pixel %d | R %d G %d B %d\n " , i ,binair[i], binair[i+1], binair[i+2]);
+        printf("pixel %d | R %d G %d B %d\n " , i ,pixelsBinair[i], pixelsBinair[i+1], pixelsBinair[i+2]);
 
     }
 
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-void convertToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
+void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
 
     for (int i = 0; i < imageSize - 2; i += 3) {
         long bBin = 0;
