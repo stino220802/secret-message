@@ -19,9 +19,9 @@ int main(int argc, char* argv[])
      }*/
 
     FILE *fptr;
-
+    int j = 0;
     const char filename[] = "tekst.txt";
-    char c = NULL;
+    char c = 0;
 
     // Open file
     fptr = fopen(filename, "r");
@@ -32,13 +32,17 @@ int main(int argc, char* argv[])
     }
 
     // Read contents from file
-    c = fgetc(fptr);
     while (c != EOF)
     {
-        printf ("%c", c);
+        printf ("%c\n", c);
         c = fgetc(fptr);
+        ++j;
     }
-    changeLetterToBit("Hallo");
+   char string[j];
+    rewind(fptr);
+    fread(string,j,1,fptr);
+    printf("%s\n",string);
+    changeLetterToBit(string);
     fclose(fptr);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
@@ -142,6 +146,7 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
 char* changeLetterToBit(char* message)
 {
     printf("test2\n");
+    printf("%s\n",message);
     if(message == NULL) return 0;
     size_t len = strlen(message);
     char *binair = malloc(len*8 + 1);
@@ -159,6 +164,6 @@ char* changeLetterToBit(char* message)
         }
         printf("test 4\n");
     }
-
+    printf("%s\n",binair);
     return binair;
 }
