@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
@@ -39,7 +38,14 @@ int main(int argc, char* argv[])
         c = fgetc(fptr);
         ++j;
     }
-   char string[j];
+        j = j + 1;
+      char string[j];
+    for(int i = 0; i <= j; i++){
+
+            string[i] = 0;
+
+
+    }
     rewind(fptr);
     fread(string,j,1,fptr);
     printf("%s\n",string);
@@ -149,11 +155,12 @@ char* changeLetterToBit(char* message)
     printf("test2\n");
     printf("%s\n",message);
     if(message == NULL) return 0;
+    printf("%s message", message);
     size_t len = strlen(message);
     char *binair = malloc(len*8 + 1);
     binair[0] = 0;
-    printf("test 3\n");
-    for(size_t i = 0; i < len; i++){
+    int a = 0;
+    for(size_t i = 0; i < len+1; i++){
         char ch = message[i];
         for(int j = 7; j >= 0; --j){
             if(ch & (1<<j)){
@@ -162,9 +169,22 @@ char* changeLetterToBit(char* message)
             else{
                 strcat(binair, "0");
             }
+        }//01100001
+        a = i * 8;
+
+        if(ch == NULL){ //00101010
+            binair[a] = '0';
+            binair[a+1] = '0';
+            binair[a+2] = '1';
+            binair[a+3] = '0';
+            binair[a+4] = '1';
+            binair[a+5] = '0';
+            binair[a+6] = '1';
+            binair[a+7] = '0';
         }
-        printf("test 4\n");
+
     }
+    printf("%d waarde van i\n\n", len);
     printf("%s\n",binair);
     return binair;
 }
