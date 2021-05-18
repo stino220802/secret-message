@@ -9,7 +9,7 @@ char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 int main(int argc, char* argv[])
 {
-    char message[200];
+   /* char message[200];
     printf("geef secret message in ");
     scanf("%s", message);
     char *lettersToBits = changeLetterToBit(message);
@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
         printf ("%c", c);
         c = fgetc(fptr);
     }
-    changeLetterToBit(c);
+    changeLetterToBit("Hallo");
     fclose(fptr);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
@@ -141,10 +141,12 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
 
 char* changeLetterToBit(char* message)
 {
+    printf("test2\n");
     if(message == NULL) return 0;
     size_t len = strlen(message);
     char *binair = malloc(len*8 + 1);
     binair[0] = 0;
+    printf("test 3\n");
     for(size_t i = 0; i < len; i++){
         char ch = message[i];
         for(int j = 7; j >= 0; --j){
@@ -155,6 +157,7 @@ char* changeLetterToBit(char* message)
                 strcat(binair, "0");
             }
         }
+        printf("test 4\n");
     }
 
     return binair;
