@@ -169,10 +169,10 @@ char* changeLetterToBit(char* message)
             else{
                 strcat(binair, "0");
             }
-        }//01100001
+        }
         a = i * 8;
 
-        if(ch == NULL){ //00101010
+        if(ch == 0){
             binair[a] = '0';
             binair[a+1] = '0';
             binair[a+2] = '1';
