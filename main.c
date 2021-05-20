@@ -7,6 +7,7 @@
 #define TEKSTINPUT "tekst.txt"
 char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
+char* changeLSB(int* pixelsBinair, char* messageBinair, int imageSize   );
 int main(int argc, char* argv[])
 {
    /* char message[200];
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
     rewind(fptr);
     fread(string,j,1,fptr);
     printf("%s\n",string);
-    changeLetterToBit(string);
+    char* messageBinair = changeLetterToBit(string);
     fclose(fptr);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
@@ -87,14 +88,16 @@ int main(int argc, char* argv[])
     fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer); // Lees alle pixels (de rest van de file
     fclose(inputFilePointer);
 
-    for(int i =0; i < imageSize-2; i+=3)
+    for(int i =0; i < imageSize-2; i+=3)// uit de vb code
     {
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
 
     }
     int pixelsBinair[imageSize];
+
     convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
-    for(int i =0; i < imageSize-2; i+=3)
+    //char* output = changeLSB(pixelsBinair, messageBinair, imageSize);
+    for(int i =0; i < imageSize-2; i+=3)// uit de zelfgemaakte code!!!
     {
         printf("pixel %d | R %d G %d B %d\n " , i ,pixelsBinair[i], pixelsBinair[i+1], pixelsBinair[i+2]);
 
@@ -102,7 +105,7 @@ int main(int argc, char* argv[])
 
     fclose(inputFilePointer);
     free(inputPixels);
-
+    free(messageBinair);
     return 0;
 }
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
@@ -146,7 +149,7 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
         buf[i] = rBin;
         buf[i + 1] = gBin;
         buf[i + 2] = bBin;
-        //printf("%d\n", binair[i]);
+
     }
 }
 
@@ -155,7 +158,6 @@ char* changeLetterToBit(char* message)
     printf("test2\n");
     printf("%s\n",message);
     if(message == NULL) return 0;
-    printf("%s message", message);
     size_t len = strlen(message);
     char *binair = malloc(len*8 + 1);
     binair[0] = 0;
@@ -188,3 +190,44 @@ char* changeLetterToBit(char* message)
     printf("%s\n",binair);
     return binair;
 }
+//changeLSB(pixelsBinair, messageBinair, imageSize, outputPixels );
+     char* changeLSB(int* pixelsBinair, char* messageBinair, int imageSize){
+        size_t len = strlen(messageBinair);
+        char *output = malloc(imageSize);
+        for(size_t i=0; i <= len; i++){
+            int pixels = pixelsBinair[i];
+            int temp = pixels;
+            int count = 0;
+            do{                 // tellen hoeveel digits het binair getal heeft
+                count++;
+                temp /= 10; // laatste digit van temp verwijderen
+            } while (temp!= 0);
+
+            int leadingZeros = 8-count;
+            int temp2 = pixels;
+            int lastDigit = temp2 % 10;
+            int inputDigit = messageBinair[i];
+
+           if(lastDigit == 1 && inputDigit == 0 ){
+               printf("voor temp2 %d\n", temp2);
+                temp2 = temp2 - 1;
+               printf("na temp2 %d\n", temp2);
+            }
+
+            else if(lastDigit == 0 && inputDigit == 1){
+
+                temp2 = temp2 + 1;
+
+            }
+
+            if(leadingZeros != 0){
+                for(int b = 0; b < leadingZeros; b++){
+                    output[b] = '0';
+                }
+            }
+
+
+        }
+        return 0;
+}
+
