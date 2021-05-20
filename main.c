@@ -10,45 +10,7 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] )
 void Fileopeningconvert();
 int main(int argc, char* argv[])
 {
-   /* char message[200];
-    printf("geef secret message in ");
-    scanf("%s", message);
-    char *lettersToBits = changeLetterToBit(message);
-    printf("%s \n test\n", lettersToBits);
-    /* for (int i = 0; i < argc; i++) {
-                                                     //tijdelijk uit voor toekomstige code.
-     }*/
-
-   .
-
-    // Open file
-    fptr = fopen(filename, "r");
-    if (fptr == NULL)
-    {
-        printf("Cannot open file \n");
-        exit(0);
-    }
-
-    // Read contents from file
-    while (c != EOF)
-    {
-        printf ("%c\n", c);
-        c = fgetc(fptr);
-        ++j;
-    }
-        j = j + 1;
-      char string[j];
-    for(int i = 0; i <= j; i++){
-
-            string[i] = 0;
-
-
-    }
-    rewind(fptr);
-    fread(string,j,1,fptr);
-    printf("%s\n",string);
-    char* messageBinair = changeLetterToBit(string);
-    fclose(fptr);
+    Fileopeningconvert();
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -90,8 +52,7 @@ int main(int argc, char* argv[])
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
 
     }
-    int pixelsBinair[imageSize];
-
+   /* int pixelsBinair[imageSize];
     convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
     //char* output = changeLSB(pixelsBinair, messageBinair, imageSize);
     for(int i =0; i < imageSize-2; i+=3)// uit de zelfgemaakte code!!!
@@ -102,7 +63,7 @@ int main(int argc, char* argv[])
 
     fclose(inputFilePointer);
     free(inputPixels);
-    free(messageBinair);
+    */
     return 0;
 }
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
@@ -216,7 +177,7 @@ void Fileopeningconvert(){
         fclose(fptr);
 };
 
-void compiler(){
+void Inputbmp(){
     FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
     if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
     {
@@ -229,11 +190,10 @@ void compiler(){
     //Informatie uit de header (wikipedia)
     // haal de hoogte en breedte uit de header
     int breedte = *(int*)&bmpHeader[18];
-    int hoogte = *(int*)&bmpHeader[22]
+    int hoogte = *(int*)&bmpHeader[22];
 
     int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
     unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
-
 
 }
 
