@@ -7,6 +7,7 @@
 #define TEKSTINPUT "tekst.txt"
 char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
+void Fileopeningconvert();
 int main(int argc, char* argv[])
 {
    /* char message[200];
@@ -18,10 +19,7 @@ int main(int argc, char* argv[])
                                                      //tijdelijk uit voor toekomstige code.
      }*/
 
-    FILE *fptr;
-    int j = 0;
-    const char filename[] = "tekst.txt";
-    char c = 0;
+   .
 
     // Open file
     fptr = fopen(filename, "r");
@@ -188,3 +186,53 @@ char* changeLetterToBit(char* message)
     printf("%s\n",binair);
     return binair;
 }
+void Fileopeningconvert(){
+        FILE *fptr;
+        int j = 0;
+        const char filename[] = "tekst.txt";
+        char c = 0;
+
+        // Open file
+        fptr = fopen(filename, "r");
+        if (fptr == NULL)
+        {
+            printf("Cannot open file \n");
+            exit(0);
+        }
+
+        // Read contents from file
+        while (c != EOF)
+        {
+            printf ("%c\n", c);
+            c = fgetc(fptr);
+            ++j;
+        }
+        char string[j];
+        rewind(fptr);
+        fread(string,j,1,fptr);
+        printf("%s\n",string);
+        changeLetterToBit(string);
+        fclose(fptr);
+};
+
+void compiler(){
+    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+    if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
+    {
+        printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
+        exit(EXIT_FAILURE);
+    }
+    unsigned char bmpHeader[54]; // voorzie een array van 54-bytes voor de BMP Header
+    fread(bmpHeader, sizeof(unsigned char), 54, inputFilePointer); // lees de 54-byte header
+
+    //Informatie uit de header (wikipedia)
+    // haal de hoogte en breedte uit de header
+    int breedte = *(int*)&bmpHeader[18];
+    int hoogte = *(int*)&bmpHeader[22]
+
+    int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
+    unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
+
+
+}
+
