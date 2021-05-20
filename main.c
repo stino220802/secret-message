@@ -8,14 +8,16 @@
 char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 void Fileopeningconvert();
+void Inputbmp();
 int main(int argc, char* argv[])
 {
     Fileopeningconvert();
+    //Inputbmp();
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
 
-    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+  /*  FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
     if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
     {
         printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
@@ -51,7 +53,7 @@ int main(int argc, char* argv[])
     {
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
 
-    }
+   */ }
    /* int pixelsBinair[imageSize];
     convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
     for(int i =0; i < imageSize-2; i+=3)
@@ -62,9 +64,9 @@ int main(int argc, char* argv[])
 
     fclose(inputFilePointer);
     free(inputPixels);
-    */
+
     return 0;
-}
+}*/
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
 
     for (int i = 0; i < imageSize - 2; i += 3) {
@@ -194,6 +196,7 @@ void Inputbmp(){
 
     int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
     unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
-
+    fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
 }
+
 
