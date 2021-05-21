@@ -8,14 +8,24 @@
 char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 void Fileopeningconvert();
+void Inputbmp();
 int main(int argc, char* argv[])
 {
+  /*  for(int i = 0; i<argc;i++){
+        printf("argument count: %D\n",argc)
+    }
+
+    if(argc < 1 && strcmp(argv[1],"-s") == 0){
+        Fileopeningconvert();
+    }
+    */
     Fileopeningconvert();
+    Inputbmp();
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
 
-    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+  /*  FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
     if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
     {
         printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
@@ -51,7 +61,7 @@ int main(int argc, char* argv[])
     {
         printf("pixel %d: R= %d, G=%d, B=%d\n", i, inputPixels[i+2], inputPixels[i+1], inputPixels[i]);
 
-    }
+   */ }
    /* int pixelsBinair[imageSize];
     convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
     //char* output = changeLSB(pixelsBinair, messageBinair, imageSize);
@@ -63,9 +73,9 @@ int main(int argc, char* argv[])
 
     fclose(inputFilePointer);
     free(inputPixels);
-    */
+
     return 0;
-}
+}*/
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
 
     for (int i = 0; i < imageSize - 2; i += 3) {
@@ -107,7 +117,9 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
         buf[i] = rBin;
         buf[i + 1] = gBin;
         buf[i + 2] = bBin;
-
+        printf("%d\n", buf[i]);
+        printf("%d\n", buf[i+1]);
+        printf("%d\n\n", buf[i+2]);
     }
 }
 
@@ -143,7 +155,9 @@ char* changeLetterToBit(char* message)
             binair[a+7] = '0';
         }
 
+        return 0;
     }
+    LSBBIT(binair);
     printf("%d waarde van i\n\n", len);
     printf("%s\n",binair);
     return binair;
@@ -169,12 +183,17 @@ void Fileopeningconvert(){
             c = fgetc(fptr);
             ++j;
         }
-        char string[j];
+        printf("\nhier komt die dan\n");
+        printf("\n----%d------\n",j);
+        char *string = (char*) malloc(sizeof(char)*j);
         rewind(fptr);
         fread(string,j,1,fptr);
+        string[j -1] ='\0';
         printf("%s\n",string);
         changeLetterToBit(string);
         fclose(fptr);
+        free(string);
+        return 0;
 };
 
 void Inputbmp(){
@@ -194,6 +213,12 @@ void Inputbmp(){
 
     int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
     unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
+    fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
+    int pixelsBinair[imageSize];
+    convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
+}
+
+void LSBBIT(){
 
 }
 
