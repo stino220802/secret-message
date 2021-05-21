@@ -11,7 +11,15 @@ void Fileopeningconvert();
 void Inputbmp();
 int main(int argc, char* argv[])
 {
-    //Fileopeningconvert();
+  /*  for(int i = 0; i<argc;i++){
+        printf("argument count: %D\n",argc)
+    }
+
+    if(argc < 1 && strcmp(argv[1],"-s") == 0){
+        Fileopeningconvert();
+    }
+    */
+    Fileopeningconvert();
     Inputbmp();
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
@@ -147,7 +155,7 @@ char* changeLetterToBit(char* message)
             binair[a+7] = '0';
         }
 
-
+        return 0;
     }
     LSBBIT(binair);
     printf("%d waarde van i\n\n", len);
@@ -185,6 +193,7 @@ void Fileopeningconvert(){
         changeLetterToBit(string);
         fclose(fptr);
         free(string);
+        return 0;
 };
 
 void Inputbmp(){
