@@ -5,10 +5,10 @@
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
 #define TEKSTINPUT "tekst.txt"
-char* changeLetterToBit(char* message);
+char* changeLetterToBit(char* message, int* pixelsBinair, int imageSize);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
-void Fileopeningconvert();
-void Inputbmp();
+void Fileopeningconvert(int* pixelsBinair, int imageSize);
+void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
 int main(int argc, char* argv[])
 {
   /*  for(int i = 0; i<argc;i++){
@@ -19,8 +19,30 @@ int main(int argc, char* argv[])
         Fileopeningconvert();
     }
     */
-    Fileopeningconvert();
-    Inputbmp();
+
+    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+    if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
+    {
+        printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
+        exit(EXIT_FAILURE);
+    }
+    unsigned char bmpHeader[54]; // voorzie een array van 54-bytes voor de BMP Header
+    fread(bmpHeader, sizeof(unsigned char), 54, inputFilePointer); // lees de 54-byte header
+
+    //Informatie uit de header (wikipedia)
+    // haal de hoogte en breedte uit de header
+    int breedte = *(int*)&bmpHeader[18];
+    int hoogte = *(int*)&bmpHeader[22];
+
+    int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
+    unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
+    fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
+    int pixelsBinair[imageSize];
+    printf("image size %d\n ", imageSize);
+
+    convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
+
+    Fileopeningconvert(pixelsBinair, imageSize);
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -123,24 +145,31 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
     }
 }
 
-char* changeLetterToBit(char* message)
+char* changeLetterToBit(char* message, int* pixelsBinair, int imageSize)
 {
     printf("test2\n");
     printf("%s\n",message);
     if(message == NULL) return 0;
     size_t len = strlen(message);
     char *binair = malloc(len*8 + 1);
-    binair[0] = 0;
+    for (size_t z = 0; z < len + 1; z++) {
+        binair[z] = 0;
+
+    }
+
     int a = 0;
     for(size_t i = 0; i < len+1; i++){
         char ch = message[i];
         for(int j = 7; j >= 0; --j){
             if(ch & (1<<j)){
                 strcat(binair, "1");
+
             }
             else{
                 strcat(binair, "0");
+
             }
+
         }
         a = i * 8;
 
@@ -155,14 +184,13 @@ char* changeLetterToBit(char* message)
             binair[a+7] = '0';
         }
 
-        return 0;
+
     }
-    LSBBIT(binair);
-    printf("%d waarde van i\n\n", len);
-    printf("%s\n",binair);
+    LSBBIT(binair, message, pixelsBinair, imageSize);
+    printf("%s test\n",binair);
     return binair;
 }
-void Fileopeningconvert(){
+void Fileopeningconvert(int* pixelsBinair, int imageSize){
         FILE *fptr;
         int j = 0;
         const char filename[] = "tekst.txt";
@@ -183,42 +211,57 @@ void Fileopeningconvert(){
             c = fgetc(fptr);
             ++j;
         }
+        j = j + 1;
         printf("\nhier komt die dan\n");
         printf("\n----%d------\n",j);
+
+
         char *string = (char*) malloc(sizeof(char)*j);
         rewind(fptr);
         fread(string,j,1,fptr);
-        string[j -1] ='\0';
+        //string[j -1] ='\0';
         printf("%s\n",string);
-        changeLetterToBit(string);
+        changeLetterToBit(string, pixelsBinair, imageSize);
         fclose(fptr);
         free(string);
-        return 0;
-};
 
-void Inputbmp(){
-    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
-    if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
-    {
-        printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
-        exit(EXIT_FAILURE);
+}
+
+
+
+
+void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize){
+     size_t len = strlen(message);
+   char *output = malloc(imageSize);
+    output[0] = '\0';
+   for(int i = 0; i < imageSize; i++){
+       int temp = pixelsBinair[i];
+       int pixels =  temp;
+       int count = 0;
+       do{
+           count++;
+           temp /= 10;
+       }while(temp != 0);
+       int leadingZero =  8 - count;
+       int temp2 = pixels;
+       int lastDigit = temp2 % 10;
+       char inputDigit = binair[i];
+       if(inputDigit == '1' ){
+           if(lastDigit == 0){
+               pixels = pixels + 1;
+           }
+       }
+       if(inputDigit == '0'){
+           if(lastDigit == 1 )
+           {
+               pixels = pixels - 1;
+           }
+       }
+       
+       output[i] = pixels;
+
+
+   }
     }
-    unsigned char bmpHeader[54]; // voorzie een array van 54-bytes voor de BMP Header
-    fread(bmpHeader, sizeof(unsigned char), 54, inputFilePointer); // lees de 54-byte header
 
-    //Informatie uit de header (wikipedia)
-    // haal de hoogte en breedte uit de header
-    int breedte = *(int*)&bmpHeader[18];
-    int hoogte = *(int*)&bmpHeader[22];
-
-    int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
-    unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
-    fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
-    int pixelsBinair[imageSize];
-    convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
-}
-
-void LSBBIT(){
-
-}
 
