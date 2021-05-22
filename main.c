@@ -5,16 +5,16 @@
 //#define __DEBUG
 #define BMPINPUTFILE "test.bmp"
 #define TEKSTINPUT "tekst.txt"
-char* changeLetterToBit(char* message, int* pixelsBinair, int imageSize);
+char* changeLetterToBit(char* message);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
-void Fileopeningconvert(int* pixelsBinair, int imageSize);
+void Fileopeningconvert();
 void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
 void Inputbmp();
 int main(int argc, char* argv[])
 {
     Fileopeningconvert();
     Inputbmp();
-    LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
+    //LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
 
   /*  for(int i = 0; i<argc;i++){
         printf("argument count: %D\n",argc)
@@ -150,7 +150,7 @@ void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf[]) {
     }
 }
 
-char* changeLetterToBit(char* message, int* pixelsBinair, int imageSize)
+char* changeLetterToBit(char* message)
 {
     printf("test2\n");
     printf("%s\n",message);
@@ -191,11 +191,11 @@ char* changeLetterToBit(char* message, int* pixelsBinair, int imageSize)
 
 
     }
-    LSBBIT(binair, message, pixelsBinair, imageSize);
+    //LSBBIT(binair, message, pixelsBinair, imageSize);
     printf("%s test\n",binair);
     return binair;
 }
-void Fileopeningconvert(int* pixelsBinair, int imageSize){
+void Fileopeningconvert(){
         FILE *fptr;
         int j = 0;
         const char filename[] = "tekst.txt";
@@ -226,7 +226,7 @@ void Fileopeningconvert(int* pixelsBinair, int imageSize){
         fread(string,j,1,fptr);
         //string[j -1] ='\0';
         printf("%s\n",string);
-        changeLetterToBit(string, pixelsBinair, imageSize);
+        changeLetterToBit(string);
         fclose(fptr);
         free(string);
 
