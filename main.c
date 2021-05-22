@@ -260,8 +260,5 @@ void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize){
        
        output[i] = pixels;
 
-
    }
     }
-
-
