@@ -15,8 +15,14 @@ int main(int argc, char* argv[])
         printf("argument count: %D\n",argc)
     }
 
-    if(argc < 1 && strcmp(argv[1],"-s") == 0){
-        Fileopeningconvert();
+    if(argc < 1 && strcmp(argv[1],"--help") == 0){
+       printf("voor compress doe:gcc -s ***.txt -i (input naam).bmp -o (output naam).bmp");
+    }
+    else if(argc < 1 && strcmp(argv[1],"-c") == 0){
+
+    }
+    else if(argc < 1 && strcmp(argv[1],"-d") == 0){
+
     }
     */
 
