@@ -9,8 +9,13 @@ char* changeLetterToBit(char* message, int* pixelsBinair, int imageSize);
 void convertPixelsToBits(unsigned char* inputPixels, int imageSize, int buf [] );
 void Fileopeningconvert(int* pixelsBinair, int imageSize);
 void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
+void Inputbmp();
 int main(int argc, char* argv[])
 {
+    Fileopeningconvert();
+    void Inputbmp();
+    void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
+
   /*  for(int i = 0; i<argc;i++){
         printf("argument count: %D\n",argc)
     }
@@ -20,7 +25,7 @@ int main(int argc, char* argv[])
     }
     */
 
-    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+   /* FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
     if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
     {
         printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
@@ -42,7 +47,7 @@ int main(int argc, char* argv[])
 
     convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
 
-    Fileopeningconvert(pixelsBinair, imageSize);
+    Fileopeningconvert(pixelsBinair, imageSize);*/
 #ifdef __DEBUG
     printf("DEBUG info: BMP transformer\n");
 #endif
@@ -262,3 +267,24 @@ void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize){
 
    }
     }
+void Inputbmp(){
+    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+    if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
+    {
+        printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
+        exit(EXIT_FAILURE);
+    }
+    unsigned char bmpHeader[54]; // voorzie een array van 54-bytes voor de BMP Header
+    fread(bmpHeader, sizeof(unsigned char), 54, inputFilePointer); // lees de 54-byte header
+
+    //Informatie uit de header (wikipedia)
+    // haal de hoogte en breedte uit de header
+    int breedte = *(int*)&bmpHeader[18];
+    int hoogte = *(int*)&bmpHeader[22];
+
+    int imageSize = 3 * breedte * hoogte; //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB)
+    unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
+    fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
+    int pixelsBinair[imageSize];
+    convertPixelsToBits(inputPixels, imageSize, pixelsBinair);
+}
