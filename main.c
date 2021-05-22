@@ -13,8 +13,8 @@ void Inputbmp();
 int main(int argc, char* argv[])
 {
     Fileopeningconvert();
-    void Inputbmp();
-    void LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
+    Inputbmp();
+    LSBBIT(char* binair, char* message, int* pixelsBinair, int imageSize);
 
   /*  for(int i = 0; i<argc;i++){
         printf("argument count: %D\n",argc)
