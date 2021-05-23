@@ -3,8 +3,10 @@
 #include <string.h>
 
 //#define __DEBUG
-#define BMPINPUTFILE "test.bmp"
+#define BMPINPUTFILE "InputBMP.bmp"
 #define TEKSTINPUT "tekst.txt"
+#define BMPOUTPUT "OutputBMP.bmp"
+#define TEKSTOUTPUT "outputtext.txt"
 int imageSize = 0;
 char* changeLetterToBit(char* message);
 int* convertPixelsToBits(unsigned char* inputPixels );
@@ -118,8 +120,6 @@ char* changeLetterToBit(char* message)
             binair[a+6] = '1';
             binair[a+7] = '0';
         }
-
-
     }
     printf("%s test\n",binair);
     return binair;
@@ -166,7 +166,9 @@ char* Fileopeningconvert(){
 
 
 int* LSBBIT(char* binair,  int* pixelsBinair){
-    int* output = malloc(imageSize);
+
+    unsigned int * output =(int*) realloc(output,sizeof (imageSize));
+
     output[0] = '\0';
 
     for(int i = 0; i < imageSize; i++){
@@ -198,7 +200,7 @@ int* LSBBIT(char* binair,  int* pixelsBinair){
 
 
         output[i] = pixels;
-        printf("output string %d", output[i]);
+        printf(" %d\n", output[i]);
 
     }
     return output;
@@ -234,3 +236,35 @@ int* Inputbmp(){
     fclose(inputFilePointer);
     free(inputPixels);
 }
+
+
+//fase 2
+
+/*char Inputbmp2(){
+    FILE* inputFilePointer = fopen(BMPINPUTFILE, "rb"); //maak een file pointer naar de afbeelding
+    if(inputFilePointer == NULL) //Test of het open van de file gelukt is!
+    {
+        printf("Something went wrong while trying to open %s\n", BMPINPUTFILE);
+        exit(EXIT_FAILURE);
+    }
+    unsigned char bmpHeader[54]; // voorzie een array van 54-bytes voor de BMP Header
+    fread(bmpHeader, sizeof(unsigned char), 54, inputFilePointer); // lees de 54-byte header
+
+    //Informatie uit de header (wikipedia)
+    // haal de hoogte en breedte uit de header
+    int breedte = *(int*)&bmpHeader[18];
+    int hoogte = *(int*)&bmpHeader[22];
+    imageSize = 3 * breedte * hoogte;
+    //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB) //
+
+    unsigned char* inputPixels = (unsigned char *) calloc(imageSize, sizeof(unsigned char)); // allocate een array voor alle pixels
+    fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
+    reader(inputPixels);
+    return 0;
+}
+
+void reader(input){
+    for (int i = 0; i < 8; ++i) {
+      int byte[i] = fgetc(FILE* input);
+    }
+} */
