@@ -1,4 +1,7 @@
-
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
 //#define __DEBUG
 #define BMPINPUTFILE "InputBMP.bmp"
 #define TEKSTINPUT "tekst.txt"
