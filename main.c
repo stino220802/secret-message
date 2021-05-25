@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 }
 
 int* convertPixelsToBits(unsigned char* inputPixels) {
-    int* buf = malloc (sizeof imageSize);
+    int* buf = malloc (imageSize);
 
     printf("imageSize %d \n", imageSize);
     for (int i = 0; i < imageSize - 2; i += 3) {
@@ -221,14 +221,15 @@ int* Inputbmp(){
     int hoogte = *(int*)&bmpHeader[22];
     imageSize = 3 * breedte * hoogte;
     //ieder pixel heeft 3 byte data: rood, groen en blauw (RGB) //
-    printf("test104");
-    unsigned char* inputPixels = malloc(sizeof imageSize);
+    printf("test104 %d\n",imageSize);
+    unsigned char* inputPixels = malloc(imageSize);
+    printf("test105 %p\n",inputPixels);
     fread(inputPixels, sizeof(unsigned char), imageSize, inputFilePointer);
 
-    printf("test105");
+    printf("test106\n");
 
 
-    printf("test106");
+    printf("test107\n");
 
     int* pixelsBinair = convertPixelsToBits(inputPixels);
 
