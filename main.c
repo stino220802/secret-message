@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 //#define __DEBUG
 #define BMPINPUTFILE "InputBMP.bmp"
